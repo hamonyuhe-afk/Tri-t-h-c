@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bài kiểm tra</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: white;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        main {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+        .card{
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0px 2px 8px #ccc;
+            padding: 15px;
+        }
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 8px;
+        }
+        @media (max-width: 600px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3>Bài kiểm tra thường xuyên</h3>
+    </header>
+    <main>
+        <div class="card">
+            <h3>Phần 1</h3>
+            <p>Đây là phần nội dung đầu tiên trong bài</p>
+        </div>
+        <div class="card">
+            <h3>Phần 2</h3>
+            <p>CSS Grid giúp dễ dàng chia bố cục</p>
+        </div>
+        <div class="card">
+            <h3>Phần 3</h3>
+            <p>Responsive giúp website hiển thị tốt</p>
+        </div>
+
+    </main>
+    <footer>
+        &copy; Học thiết kế web thật hay
+    </footer>
+
+</body>
+</html>

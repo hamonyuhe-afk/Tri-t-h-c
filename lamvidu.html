@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký khóa học</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+        .form {
+            width: 620px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #e0f2fe;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px #bfbfde;
+        }
+        h2 {
+            text-align: center;
+            color: #6366f1;
+        }
+        .the {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .the span {
+            background-color: #eff6ff;
+            color: #6366f1;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .hang {
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #94B8A3;
+            border-radius: 8px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border: 1px solid #A3B894;
+            box-shadow: 0 0 5px #E0FEE2;
+        }
+        .rong {
+            grid-column: 1 / 3;
+        }
+        .phi {
+            display: inline-block;
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+        .nut {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            margin: 0 5px;
+        }
+        button:hover {
+            background-color: #4f46e5;
+        }
+        button:active {
+            background-color: #3730a3;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+
+<body>
+    <form class="form" onsubmit="return kiemTra()">
+        <h2>🎓 ĐĂNG KÝ KHÓA HỌC</h2>
+
+        <div class="the">
+            <span>HTML & CSS</span>
+            <span>JavaScript</span>
+            <span>Python</span>
+            <span>AI/ML</span>
+        </div>
+
+        <div class="hang">
+            <div>
+                <label>Họ tên *</label>
+                <input type="text" id="hoten" placeholder="Nguyễn Văn A">
+            </div>
+
+            <div>
+                <label>Email *</label>
+                <input type="text" id="email" placeholder="email@domain.com">
+            </div>
+
+            <div>
+                <label>Điện thoại</label>
+                <input type="text" id="dienthoai" placeholder="0xxxxxxxxx">
+            </div>
+
+            <div>
+                <label>Cơ sở học</label>
+                <select>
+                    <option>Hà Nội</option>
+                    <option>Thái Nguyên</option>
+                    <option>TP. Hồ Chí Minh</option>
+                </select>
+            </div>
+
+            <div class="rong">
+                <label>Mục tiêu học tập</label>
+                <textarea id="muctieu" rows="4"
+                placeholder="Bạn kỳ vọng đạt được điều gì sau khóa học?"></textarea>
+
+                <div class="phi">
+                    Học phí tham khảo: 2.500.000đ – 8.000.000đ (tùy khóa)
+                </div>
+
+                <div class="nut">
+                    <button type="submit">Đăng ký</button>
+                    <button type="reset" class="reset">Làm lại</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        function kiemTra() {
+            var hoten = document.getElementById("hoten").value;
+            var email = document.getElementById("email").value;
+            var dienthoai = document.getElementById("dienthoai").value;
+            var muctieu = document.getElementById("muctieu").value;
+
+            if (hoten.trim() == "") {
+                alert("Vui lòng nhập họ tên!");
+                return false;
+            }
+
+            if (email.trim() == "" ||
+                !email.includes("@") ||
+                !email.includes(".")) {
+                alert("Email không hợp lệ!");
+                return false;
+            }
+
+            if (dienthoai.length != 10 ||
+                !dienthoai.startsWith("0") ||
+                isNaN(dienthoai)) {
+                alert("Số điện thoại phải có 10 chữ số và bắt đầu bằng 0!");
+                return false;
+            }
+
+            if (muctieu.trim() == "") {
+                alert("Vui lòng nhập mục tiêu học tập!");
+                return false;
+            }
+
+            alert("Đăng ký thành công!");
+            console.log("Đăng ký khóa học thành công!");
+            return false;
+        }
+    </script>
+</body>
+</html>
+```

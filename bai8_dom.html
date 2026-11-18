@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <p id="welcome" style="color: red;"></p>
+    <form id="my-frm">
+        <input type="text" name="firstname" placeholder="Frist name"/>
+        <input type="text" name="lastname" placeholder="Last name"/>
+        <input type="button" onclick="sendInto()"value="Submit"/>
+
+    </form>
+    <script>
+        function sendInto(){
+            var inputs=document.getElementById("my-frm").elements;
+            var inputByIndex=inputs[0];
+            var inputByName=inputs["firstname"];
+            message("welcome"+inputs["firstname"].value+" "+inputs["lastname"].value);
+ 
+        }
+        function message(m){
+            document.getElementById("welcome").innerHTML=m;
+
+        }
+
+    
+
+    </script>
+
+</body>
+</html>

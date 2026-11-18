@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0px;
+            padding: 0px;
+            box-sizing:border-box;
+        }
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+        form{
+            width: 600px;
+            height: 700px;
+            border: 1px solid rgb(42, 42, 109);
+            border-radius: 8px;
+            background-color: rgb(175, 224, 252);
+            justify-content: center;
+            margin: auto;
+        }
+        div#header{
+            text-align: center;
+        }
+        .main{
+            display:flex;
+            flex-wrap: wrap;
+            padding-left: 20px;
+            gap: 50px;
+            padding: 20px;
+        }
+        .input{
+            border: 1px solid rgb(202, 202, 202);
+            width: 250px;
+            height:40px;
+            border-radius: 8px;
+            padding-left:  10px;
+        }
+        .select{
+            border: 1px solid rgb(202, 202, 202);
+            width: 250px;
+            height:40px;
+            border-radius: 8px;
+            padding-left:  10px;
+        }
+        textarea{
+            border: 1px solid rgb(202, 202, 202);
+            width: 548px;
+            height:70px;
+            border-radius: 8px;
+            padding-left:  10px;
+        }
+       
+        input[type="file"]{
+           display: none;
+        }
+        .file{
+            color:white;
+            padding-left: 20px;
+            border-radius: 8px;
+            border: 1px solid blue;
+            border-radius: 8px;
+            background-color: blue;
+        }
+        button{
+            width: 250px;
+            height: 40px;
+            border:1px solid rgb(60, 60, 217);
+            border-radius: 8px ;
+            background-color: rgb(60, 60, 217);
+            color: white;
+            display:flex;
+            justify-content: center;
+            margin: auto;
+            padding-top: 10px;
+        }
+        .ngang{
+            display:flex;
+            flex-wrap: wrap;
+        }
+         .input1{
+            border: 1px solid rgb(220, 100, 100);
+            width: 250px;
+            height:50px;
+            border-radius: 8px;
+            padding-left:  10px;
+            background-color: rgb(230, 172, 172);
+        }
+    </style>
+</head>
+<body>
+   <form onsubmit="kiemTra(event)">
+        <div id="header">
+            <h3 style="color:rgb(45, 89, 201)">Đơn xin việc</h3>
+            <p style="font-size: 12px;color:rgb(158, 158, 158);">Nhập thông tin ứng tuyển CV định dạng PDF</p>
+        </div>
+        <div class="main">
+           <div >
+            <label for="ten">Họ và tên</label><br>
+            <input type="text" id="ten" placeholder="Nhập họ và tên" requied class="input">
+            <p id="thongbao" style="color:red"></p>
+           </div>
+           <div>
+            <label for="email">Email</label><br>
+            <input id="email" type="text" placeholder="Nhập email" requied class="input">
+            <p id="thongbao1" style="color:red"></p>
+             
+           </div>
+            <div>
+            <label for="sdt">Điện thoại</label><br>
+            <input id="sdt" type="text" placeholder="Nhập số điện thoại" requied class="input">
+             <p id="thongbao2" style="color:red"></p>
+           </div>
+          <div>
+             <label for="gt">Giới tính</label><br>
+             <select class="select" id="gt">
+               <option>Nam</option>
+               <option>Nữ</option>
+             </select>
+          </div>
+          <div>
+            <label for="knang">Kỹ năng</label><br>
+            <textarea id="knang">Ví dụ: java</textarea>
+          </div>
+          <div>
+            <label for="cv">CV (PDF <= 5MB)</label><br>
+          <div class="input1">
+            <label for="cv" class="file">Chọn tệp</label>
+                 <input type="file" id="cv">
+                 <span>Không có tệp nào được chọn</span>
+                 <p id="thongbao3" style="color:red"></p>
+          </div>
+        </div>
+        </div>
+        <br>
+        <div class="ngang">
+            <button type="submit">
+              <p>Gửi hồ sơ</p>
+            </button>
+            <button style="background-color: gray;" type="reset">
+              <p>Làm lại</p>
+            </button>
+        </div>
+   </form>
+   <script>
+    function kiemTra(event){
+        event.preventDefault();
+        let ten=document.getElementById("ten").value.trim();
+        let email=document.getElementById("email").value.trim();
+        let sdt=document.getElementById("sdt").value.trim();
+        let cv=document.getElementById("cv").files[0];
+         let gt=document.getElementById("gt").value;
+          let knang=document.getElementById("knang").value;
+        let tb=document.getElementById("thongbao");
+        let tb1=document.getElementById("thongbao1");
+        let tb2=document.getElementById("thongbao2");
+        let tb3=document.getElementById("thongbao3");
+        let mau=/^[^\s@]+@[^\s@"]+\.[^\s@]+$/;
+        let mausdt=/^0[0-9]{9}$/;
+        if(ten===""){
+            tb.innerHTML="Không để trống";
+        }
+        if(!mau.test(email)){
+            tb1.innerHTML="Email không hợp lệ!"
+        }
+        if(!mausdt.test(sdt)){
+           tb2.innerHTML="Số điện thoại 10 số!";
+        }
+        if(cv.type !="application/pdf"){
+            tb3.innerHTML="Chọn tệp CV (PDF)";
+        }
+        console.log("Họ và tên:",ten);
+        console.log("Email:",email);
+        console.log("Số điện thoại:",sdt);
+        console.log("Giới tính:",gt);
+        console.log("Kỹ năng:",knang);
+        console.log("CV:",cv);
+    }
+   </script>
+</body>
+</html>

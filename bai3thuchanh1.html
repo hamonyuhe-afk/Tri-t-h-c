@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <from action=" "method="get">
+        <table border="1" width="600" bgcolor="#BDE0FE">
+            
+        <tr>
+            <th colspan="2" bgcolor="blue" style="height-100xp">Biểu mẫu đăng kí hội thảo</th><br>
+        </tr>
+        <tr>
+            <td>Họ tên</td>
+            <td><input type="text" name="txtHoten" placeholder="Nhap ho ten cua ban"></td> 
+
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" name="txtmail" placeholder="Nhap email"></td>
+            </tr>
+            <tr>
+                <td>Chủ đề bạn quan tâm</td>
+                <td>
+                    <select name="Chude">
+                        <option>Trí tuệ nhân tạo</option>
+                        <option>Lập trình web</option>
+                        <option>An ninh mạng</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Bạn đã tham gia hội thảo trước đây chưa?</td>
+                <td>
+                    <input type="radio" name="thamgia" value="co"> có
+                    <input type="radio" name="thamgia" value="khong"> chưa
+                </td>
+                </td>
+            </tr>
+            <tr>
+                <td>Thời gian bạn có thể tham dự</td>
+                <td>
+                    <input type="checkbox" name="thoigian" value="sang">Sáng
+                    <input type="checkbox" name="thoigian" value="chieu">chiều
+                    <input type="checkbox" name="thoigian" value="toi">tối
+                </td>
+            </tr>
+            <tr>
+                <td>Câu hỏi dành cho diễn giả</td>
+                <td><textarea name="cauhoi" rows="5" cols="50"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Dang ky">
+            </tr>
+    </table>
+    </from>
+</body>
+</html>

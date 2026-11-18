@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="a">Số a</label>
+        <input type="text" id="a" name="a"><br><br>
+        <label for="b"> Số b</label>
+        <input type="text" id="b" name="b"> <br><br>
+        <button type="button" onclick="Tong()">Tính tổng</button>
+    </form>
+    <p>Kết quả: <span id="ketqua"></span></p>
+    <script>
+        function Tong(){
+            let a=Number(document.getElementById("a").value);
+            let b=Number(document.getElementById("b").value);
+                let tong=a+b;
+                document.getElementById("ketqua").innerHTML=tong;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Responsive</title>
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+            box-sizing: boder-box;
+        }
+        body{
+            font-family:Arial, Helvetica,sans-serif;
+            line-height: 1.6;
+        }
+        header{
+            background-color:rgb(88, 137,236);
+            color:white;
+            text-align: center;
+            padding:1rem;
+        }
+        nav{
+            display:flex;
+            justify-content: center;
+            background-color: rgb( 139,105,240);
+        }
+        nav a{
+            color:white;
+            text-decoration: none;
+            padding:1rem 1.5rem;
+            transition: background-color 0,3s;
+
+        }
+        nav a:hover{
+            background-color: rgb(69,185,182);
+
+        }
+        main{
+            display: flex;
+            flex-wrap: wrap;
+            padding:1rem;
+        }
+        section{
+            flex:1 1 300px;
+            background-color: rgb(240, 240, 241);
+            border-radius:5px;
+            margin:20px;
+            padding:16px;
+        }
+        footer{
+            background-color: rgb(18, 18, 32);
+            color:white;
+            padding:1rem;
+            text-align: center;
+            margin:30px;
+        }
+        @media (max-width:600px){
+            nav{
+                flex-direction: column;
+            }
+            nav a{
+                padding: 0.8rem;
+                border-top:1px solid red;
+
+            }
+            main{
+                flex-direction: column;
+                padding:0.5rem;
+            }
+            section{
+                padding:0.5rem 0;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Demo tính năng Responsive</h1>
+    </header>
+    <nav>
+        <a href="#">Trang chủ</a>
+        <a href="#">Giới thiệu</a>
+        <a href="#">Dịch vụ</a>
+        <a href="#">Liên hệ</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Phần nội dung 1</h2>
+            <p>Đây là phần nội dung đầu tiên. Khi bạn thu nhỏ cửa sổ trình duyệt, thì các phần tử sẽ được sắp xếp</p>
+        </section>
+        <section>
+            <h2>Đây là phần nội dung 2</h2>
+            <p>Đây là phần nội dung thứ 2. kích thước các phần tử sẽ tự động thay đổi</p>
+        </section>
+         <section>
+            <h2>Đây là phần nội dung 3</h2>
+            <p>Đây là phần nội dung 3, Responsive hiển thị nội dung phù hợp với các loại thiết bị</p>
+         </section>
+    </main>
+    <footer>
+        @copyright:CNTT K24L-ICTU
+    </footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Box</title>
+    <style>
+       .form {
+            
+            width: 70%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background-color: #ccc;
+            padding-top: 95px;
+            padding-bottom: 70px;
+        }
+
+        .box {
+            height: 65px;
+            border: 2px solid #838491;
+            text-align: center;
+            line-height: 65px;
+            color: white;
+        }
+
+        .box1 {
+            background-color: #389ad3;
+        }
+
+        .box2,.box3 {
+            background-color: rgb(122, 184, 122);
+        }
+
+        @media (max-width: 600px) {
+            .form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form">
+        <div class="box box1">Box 1</div>
+        <div class="box box2">Box 2</div>
+        <div class="box box3">Box 3</div>
+    </div>
+</body>
+</html>

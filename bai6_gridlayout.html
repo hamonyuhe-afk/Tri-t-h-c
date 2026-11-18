@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: Arial;
+            margin:0px;
+            padding:0px;
+            background-color: white;
+        }
+        header{
+            background-color:aquamarine;
+            color:white;
+            text-align:center;
+            padding:0.8rem;
+        }
+        main{
+            display:grid;
+            grid-template-columns: repeat( 3,1fr);
+            gap:20px;
+            padding:20px;
+            max-width:1200px;
+            margin:0 auto;
+        }
+        .card{
+            backgroud-color:white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgb(141, 121, 121);
+            padding:1rem;
+            transition: transfrom 0.3s ease;
+        }
+        .card:hover{
+         transform: translateY(-5px);
+}
+       card h3{
+            margin-bottom: 10px;
+            color:rgb(43, 32, 32);
+
+        }
+        .card p{
+            color:rgb(146, 115, 115);
+            line-height: 1.4;
+        }
+        footer{
+            background-color: rgb(87, 76, 63);
+            color:white;
+            text-align: center;
+            padding:1rem;
+        }
+        @media (max-width: 900px){
+            main{
+                grid-template-columns: repeat( 2,1fr);
+            }
+
+        }
+         @media (max-width: 600px){
+            main{
+                grid-template-columns: repeat( 1,1fr);
+            }
+            .card{
+                padding:15px;
+                
+            }
+        }  
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Demo responsive với CSS Grid</h1>
+    </header>
+    <main>
+        <div class="card">
+            <h3>Phần 1</h3>
+            <p>Đây là nội dung trong phần lưới, khi môi hình nhỏ lại sẽ xếp trồng lên nhau...</p>
+        </div>
+        <div class="card">
+            <h3>Phần 2</h3>
+            <p>Đây là nội dung phần 2</p>
+        </div>
+        <div class="card">
+            <h3>Phần 3</h3>
+            <p>Đây là nội dung phần 3</p>
+        </div>
+        <div class="card">
+            <h3>Phần 4</h3>
+            <p>Đây là nội dung phần 4</p>
+        </div>
+        <div class="card">
+            <h3>Phần 5</h3>
+            <p>Đây là nội dung phần 5</p>
+        </div>
+        <div class="card">
+            <h3>Phần 6</h3>
+            <p>Đây là nội dung phần 6</p>
+        </div>
+    </main>
+    <footer>
+        @Copyright: CNTT K24L - ICTU
+    </footer>
+</body>
+</html>

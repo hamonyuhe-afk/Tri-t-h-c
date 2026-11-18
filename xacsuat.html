@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xác suất - Bài 4, 5, 6</title>
+  <style>
+    :root { --bg:#101827; --panel:#1c2940; --text:#f6f8fc; --muted:#bac5d4; --accent:#f3c969; --good:#69d6a5; --bad:#ff8793; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; padding:24px 14px; color:var(--text); background:radial-gradient(circle at top left,#263f64,transparent 38%),var(--bg); font:16px/1.5 system-ui,sans-serif; }
+    button, input { font:inherit; }
+    .app { width:min(900px,100%); margin:auto; }
+    .top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    h1 { margin:8px 0 4px; }
+    .lesson-switch { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+    .lesson-switch button { color:var(--text); background:#ffffff12; border:1px solid #ffffff25; }
+    .lesson-switch button.active { color:#172238; background:var(--accent); border-color:var(--accent); }
+    .stats { display:flex; align-items:center; gap:8px; margin:14px 0; }
+    .pill { padding:7px 12px; border-radius:999px; background:#ffffff10; border:1px solid #ffffff20; }
+    .menu-toggle { display:grid; gap:5px; width:44px; height:40px; padding:9px; border:1px solid #ffffff35; border-radius:10px; background:#ffffff12; }
+    .menu-toggle span { height:2px; border-radius:2px; background:var(--accent); }
+    .progress { height:9px; overflow:hidden; border-radius:99px; background:#ffffff20; }
+    .progress div { height:100%; width:0; background:var(--accent); transition:.25s; }
+    .backdrop { position:fixed; inset:0; z-index:19; border:0; background:#050a12b8; }
+    .nav { position:fixed; z-index:20; inset:0 0 0 auto; width:min(460px,92vw); padding:20px; border-left:1px solid #ffffff25; background:var(--panel); box-shadow:-18px 0 50px #0006; }
+    [hidden] { display:none!important; }
+    .nav-header { display:flex; justify-content:space-between; align-items:center; }
+    .nav-header h2 { margin:0; color:var(--accent); }
+    .question-list { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; max-height:calc(100vh - 100px); overflow:auto; margin-top:16px; }
+    .question-link { padding:11px 5px; border:1px solid #ffffff20; border-radius:10px; color:var(--text); background:#ffffff09; text-align:center; font-weight:700; }
+    .question-link.current { color:var(--accent); border-color:var(--accent); }
+    .question-link.done { color:var(--good); border-color:#69d6a580; }
+    .card { margin-top:18px; padding:clamp(18px,4vw,30px); border:1px solid #ffffff20; border-radius:20px; background:#1b2a42eF; box-shadow:0 18px 50px #0005; }
+    .question-head { display:flex; gap:12px; color:var(--muted); margin-bottom:10px; }
+    .number { color:var(--accent); font-weight:800; }
+    #prompt { margin:0 0 16px; font-size:clamp(1.1rem,3vw,1.35rem); }
+    .options { display:grid; gap:9px; }
+    .option { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border:1px solid #ffffff24; border-radius:12px; background:#ffffff08; cursor:pointer; }
+    .option:has(input:checked) { border-color:var(--accent); background:#f3c96918; }
+    .option input { margin-top:5px; accent-color:var(--accent); }
+    .numeric { display:flex; gap:8px; }
+    .numeric input { width:min(260px,100%); padding:11px 12px; border:1px solid #ffffff30; border-radius:9px; color:var(--text); background:#263955; }
+    #feedback { min-height:25px; margin:12px 0 0; font-weight:700; }
+    #feedback.good { color:var(--good); } #feedback.bad { color:var(--bad); }
+    .actions { display:flex; justify-content:flex-end; gap:8px; margin-top:14px; }
+    button { padding:10px 16px; border:0; border-radius:9px; color:#172238; background:var(--accent); font-weight:800; cursor:pointer; }
+    button.secondary { color:var(--text); background:#ffffff18; }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+    #summary { display:none; margin-top:18px; padding:24px; text-align:center; border:1px solid #f3c96965; border-radius:18px; background:var(--panel); }
+    @media(max-width:560px){ body{padding:16px 10px}.stats{flex-wrap:wrap}.actions{justify-content:stretch}.actions button{flex:1}.question-list{grid-template-columns:repeat(3,1fr)} }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="top">
+      <div><strong>🎓 XÁC SUẤT THỐNG KÊ</strong></div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở danh sách câu hỏi" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <h1 id="title">Bài 4</h1>
+    <div class="lesson-switch" id="lessonSwitch">
+      <button class="active" type="button" data-lesson="4">Bài 4</button>
+      <button type="button" data-lesson="5">Bài 5</button>
+      <button type="button" data-lesson="6">Bài 6</button>
+    </div>
+    <div class="stats">
+      <span class="pill">⭐ Điểm: <span id="score">0</span></span>
+      <span class="pill">🔥 Chuỗi: <span id="streak">0</span></span>
+      <span class="pill">🧩 <span id="count">1/28</span></span>
+    </div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <button class="backdrop" id="backdrop" type="button" aria-label="Đóng danh sách câu hỏi" hidden></button>
+    <nav class="nav" id="questionNav" aria-label="Danh sách câu hỏi" hidden>
+      <div class="nav-header"><h2 id="navTitle">Câu hỏi · Bài 4</h2><button class="secondary" id="menuClose" type="button">Đóng</button></div>
+      <div class="question-list" id="questionList"></div>
+    </nav>
+    <section class="card" id="quizCard">
+      <div class="question-head"><span class="number" id="questionNumber"></span><span id="questionKind"></span></div>
+      <h2 id="prompt"></h2>
+      <div id="answerArea"></div>
+      <p id="feedback"></p>
+      <div class="actions">
+        <button class="secondary" id="checkButton" type="button">Kiểm tra đáp án</button>
+        <button id="nextButton" type="button" hidden>Câu tiếp theo →</button>
+      </div>
+    </section>
+    <section id="summary"><h2>Hoàn thành bài học!</h2><p id="summaryText"></p><button id="restartButton" type="button">Làm lại</button></section>
+  </main>
+  <script>
+    const lessons = {
+      4: [
+        {text:"Đại lượng ngẫu nhiên nào sau đây là đại lượng ngẫu nhiên liên tục?",options:["Số lần gọi điện thoại trong 1 giờ","Thời gian đến lớp học môn xác suất thống kê của sinh viên","Số học sinh trong phòng thi","Số sinh viên đi học muộn trong một lớp"],answer:[1]},
+        {text:"Đại lượng ngẫu nhiên nào sau đây là đại lượng ngẫu nhiên rời rạc?",options:["Thời gian chờ xe buýt","Trọng lượng một gói hàng","Số lần tung đồng xu xuất hiện mặt ngửa trong 3 lần tung","Chiều cao của học sinh lớp 10"],answer:[2]},
+        {text:"Thời gian (giờ) để sinh viên hoàn thành một bài tập lớn được mô tả bởi hàm mật độ xác suất f(x)=x/2, 0≤x≤2. Xác suất sinh viên hoàn thành bài tập trong không quá 2 giờ là:",options:["0,5","1","2","0,75"],answer:[1]},
+        {text:"Câu 4. Hàm phân phối F(x) được xác định bởi công thức nào dưới đây?",options:["A","B","C","D"]},
+        {text:"Câu 5. Hàm mật độ phân phối xác suất f(x) của đại lượng ngẫu nhiên liên tục thỏa mãn tính chất nào dưới đây?",options:["A","B","C","D"]},
+        {text:"Câu 6. Xác định các khẳng định đúng trong các khẳng định dưới đây.",options:["A","B","C","D"],multi:true},
+        {text:"Câu 7. Thời gian phục vụ tại quầy giao dịch là đại lượng ngẫu nhiên liên tục xác định bởi hàm mật độ f(x)=1/5, 0≤x≤5. Khẳng định nào sau đây đúng về hàm phân phối F(x)?",options:["A","B","C","D"]},
+        {text:"Câu 8. F(x) là hàm phân phối xác suất của đại lượng ngẫu nhiên X. Khi đó:",options:["A","B","C","D"]},
+        {text:"Chọn câu khẳng định sai.",options:["Đại lượng ngẫu nhiên liên tục có thể nhận vô hạn giá trị trong một khoảng","Điểm thi môn Toán (nguyên tử 0–10) là đại lượng ngẫu nhiên liên tục","Số lần xuất hiện mặt ngửa khi tung đồng xu vô hạn lần là đại lượng liên tục","Đại lượng ngẫu nhiên rời rạc có thể nhận hữu hạn hoặc điểm được các giá trị"],multi:true},
+        {text:"Một nhóm kiểm thử có 10 module, trong đó 5 module có lỗi. Chọn ngẫu nhiên 4 module. Gọi X là số module có lỗi trong mẫu. Biết P(X=3)=a/b tối giản. Tính T=a+b.",numeric:true,answer:"26"},
+        {text:"Một hệ thống có 10 máy chủ, các máy có số chẵn chạy Linux. Chọn ngẫu nhiên 3 máy. Gọi X là số máy chạy Linux. Biết P(X=2)=a/b tối giản. Tính T=a·b.",numeric:true,answer:"60"},
+        {text:"Một hộp có 10 thẻ đánh số 1 đến 10. Lấy ngẫu nhiên 3 thẻ không hoàn lại. Gọi X là số thẻ chẵn lấy được. Biết P(X=1)=a/b tối giản. Tính T=a+b.",numeric:true,answer:"17"},
+        {text:"Câu 13. Linh kiện điện tử có tuổi thọ liên tục X với hàm mật độ cho trong tài liệu. Xác suất linh kiện có tuổi thọ không vượt quá 1 năm:",numeric:true,answer:"0.25"},
+        {text:"Câu 14. Cho X là đại lượng ngẫu nhiên liên tục với hàm mật độ trong tài liệu. Hệ số k bằng:",numeric:true,answer:"0.09375"},
+        {text:"Câu 15. Số lượng lỗi trong 1 giờ có bảng phân bố xác suất trong tài liệu. Xác suất có tối đa 1 lỗi:",numeric:true,answer:"0.8"},
+        {text:"Câu 16. Cho X có phân phối xác suất trong tài liệu. Giá trị của a:",numeric:true,answer:"0.1"},
+        {text:"Câu 17. Công ty nghiên cứu độ bền X có hàm mật độ trong tài liệu. Xác suất độ bền không vượt quá 1,5 là:",numeric:true,answer:"27/56"},
+        {text:"Câu 18. Số người bị time-out trong giờ cao điểm có bảng phân phối trong tài liệu. Xác suất có ít nhất 2 người:",numeric:true,answer:"0.5"},
+        {text:"Câu 19. Cảm biến IoT đếm số lần mất kết nối trong 10 phút. Xác suất hoạt động ổn định, tức không quá 2 lần mất kết nối:",numeric:true,answer:"0.7"},
+        {text:"Câu 20. Cho X liên tục với hàm mật độ trong tài liệu. Tính hàm phân phối F(1):",numeric:true,answer:"0.15625"},
+        {text:"Câu 21. Tuổi thọ bóng đèn X có hàm mật độ trong tài liệu. Hệ số k thuộc khoảng:",options:["(12;34)","(34;1)","(-1;0)","(0;12)"],answer:[3]},
+        {text:"Câu 22. Số lần đăng nhập thất bại trong 1 ngày có phân phối trong tài liệu. Xác suất đăng nhập thành công ngay từ lần đầu:",options:["0,4","0,9","0,25","0,6"],answer:[3]},
+        {text:"Câu 23. Cho X liên tục có hàm mật độ trong tài liệu. Tính P(0<X<1/2):",options:["0,25","0,75","0,5","0,6"],answer:[2]},
+        {text:"Câu 24. Thời lượng cuộc gọi trong tổng đài được mô tả bởi hàm mật độ trong tài liệu. Độ dài khoảng phân phối:",options:["7","5","8","6"],answer:[2]},
+        {text:"Câu 25. Cho X liên tục với hàm mật độ trong tài liệu. Khi X≤0, hàm phân phối F(x) bằng:",numeric:true,answer:"0"},
+        {text:"Câu 26. Khối lượng sản phẩm X có hàm phân phối trong tài liệu. Xác định f(9):",numeric:true,answer:"0.05"},
+        {text:"Câu 27. Linh kiện điện tử có độ bền X với hàm mật độ trong tài liệu. Tỷ lệ linh kiện có độ bền không vượt quá mức 1:",options:["A. Tạm thời chọn đáp án này ở bài kiểm tra 15 phút","B","C. 1","D"]},
+        {text:"Câu 28. Chiều cao nam sinh có hàm phân phối F(x)=x-1,5; x∈(1,5;2,5). Hàm mật độ f(x) trong đoạn này:",options:["0,5","1","0","x"],answer:[1]}
+      ],
+      5: [
+        {text:"Câu 1. Chọn giá trị thích hợp trong bài toán xác suất đã cho.",options:["0,34","2,5","0,4","3,5"]},
+        {text:"Câu 2. Chọn giá trị thích hợp trong bài toán xác suất đã cho.",options:["0,8","0,6","0,4","0,5"]},
+        {text:"Câu 3. Chọn giá trị thích hợp trong bài toán xác suất đã cho.",options:["1,2","1,5","1,4","1,3"]},
+        {text:"Nếu X là đại lượng ngẫu nhiên có E(X)=50 và D(X)=4, thì D(3X+6) là:",numeric:true,answer:"36"},
+        {text:"Nhà máy có trọng lượng linh kiện X: E(X)=40, D(X)=5. Với Y=3X-5, phương sai của Y là:",numeric:true,answer:"45"},
+        {text:"Câu 6. Giá trị cần điền:",numeric:true,answer:"1.66"},
+        {text:"Cửa hàng có phân phối số khách: 10 khách với 0,3; 15 khách với 0,4; 20 khách với 0,3. Phương sai của X là:",numeric:true,answer:"15"},
+        {text:"Câu 8. Giá trị cần điền:",numeric:true,answer:"1.2"},
+        {text:"Câu 9. Giá trị cần điền:",numeric:true,answer:"1.2"},
+        {text:"Câu 10. Giá trị cần điền:",numeric:true,answer:"0.75"},
+        {text:"Câu 11. Giá trị cần điền:",numeric:true,answer:"0"},
+        {text:"Câu 12. Chọn giá trị đúng:",options:["1,8","4,8","2,6","3,2"]},
+        {text:"Cửa hàng có lợi nhuận E(X)=50 nghìn đồng, độ lệch chuẩn 10. Gọi S100 là tổng lợi nhuận của 100 khách hàng độc lập. Chọn các khẳng định đúng:",options:["Các đáp án khác đều sai","Độ lệch chuẩn của S100 là 100","E(S100)=5000","D(S100)=10000"],multi:true,answer:[1,2,3]},
+        {text:"Câu 14. Chọn đáp án đúng:",options:["3","1,73","9","6"]},
+        {text:"Câu 15. Điền giá trị trong tài liệu:",numeric:true},
+        {text:"Câu 16. Điền giá trị trong tài liệu:",numeric:true},
+        {text:"Cảm biến phát hiện trung bình 4 tín hiệu bất thường mỗi giờ. Xác suất trong một giờ có nhiều hơn 2 tín hiệu bất thường:",numeric:true,answer:"0.76"},
+        {text:"Máy chủ ghi nhận trung bình 6 lỗi truy cập mỗi giờ theo phân phối Poisson. Xác suất có ít nhất 1 lỗi trong 1 giờ:",numeric:true,answer:"0.998"},
+        {text:"Câu 19. Giá trị cần điền:",numeric:true,answer:"0.68"},
+        {text:"Câu 20. Chọn đáp án đúng:",options:["1","0,6","0,8","1,8"]},
+        {text:"Câu 21. Điền đáp án:",numeric:true,answer:"6038851419680"},
+        {text:"Câu 22. Điền đáp án:",numeric:true,answer:"44443651838780"},
+        {text:"Câu 23. Điền đáp án:",numeric:true,answer:"48328051047630"},
+        {text:"Câu 24. Điền đáp án:",numeric:true,answer:"436125925530"},
+        {text:"Câu 25. Điền đáp án:",numeric:true,answer:"5426851498240"},
+        {text:"Câu 26. Giá trị cần điền:",numeric:true,answer:"2.16"},
+        {text:"Câu 27. Điền đáp án X:",numeric:true,answer:"X"},
+        {text:"Nếu X có E(X)=10 và D(X)=9, thì E(2X+3) bằng:",numeric:true,answer:"23"},
+        {text:"Câu 29. Giá trị cần điền:",numeric:true,answer:"5.5"},
+        {text:"Câu 30. Chọn đáp án A.",options:["A","B","C","D"],answer:[0]},
+        {text:"Câu 31. Chọn đáp án C.",options:["A","B","C","D"],answer:[2]}
+      ],
+      6: [
+        {text:"Mẫu số liệu là gì?",options:["Một phần tử duy nhất của tổng thể","Một tập hợp con đại diện cho tổng thể","Toàn bộ các phần tử của tổng thể","Một phép đo chính xác tổng thể"],answer:[1]},
+        {text:"Câu 2. Điền đáp án:",numeric:true,answer:"38"},
+        {text:"Câu 3. Điền đáp án:",numeric:true,answer:"30"},
+        {text:"Nếu nhân tất cả giá trị trong mẫu với 3 thì:",options:["Phương sai gấp 9","Trung bình cộng và phương sai đều gấp 3","Trung bình cộng gấp 3","Độ lệch chuẩn gấp 3"],multi:true,answer:[0,2,3]},
+        {text:"Mẫu số liệu ghép nhóm có Q1=3, Q2=5, Q3=9. Khoảng tứ phân vị là:",options:["2","4","5","6"],answer:[3]},
+        {text:"Câu 6. Cỡ mẫu của mẫu số liệu là n=80.",options:["Đúng","Sai"],answer:[1]},
+        {text:"Câu 7. Tứ phân vị thứ hai của mẫu số liệu ghép nhóm là Q2=8,15.",options:["Đúng","Sai"],answer:[0]},
+        {text:"Câu 8. Điền đáp án:",numeric:true,answer:"30"},
+        {text:"Tiền lương hàng tháng của 7 nhân viên: 6,5; 8,4; 6,9; 7,2; 2,5; 6,7; 3,0 (triệu đồng). Số trung vị là:",numeric:true,answer:"6.7"},
+        {text:"Câu 10. Chọn đáp án đúng:",options:["18,1","20","21","15,25"]},
+        {text:"Khi mô tả số liệu thống kê, “tần số” của một giá trị được hiểu là:",options:["Vị trí của giá trị trong bảng phân bố","Số lần xuất hiện của giá trị đó","Hiệu giữa giá trị lớn nhất và nhỏ nhất","Giá trị trung bình của dãy số"],answer:[1]},
+        {text:"Câu 12. Điền đáp án:",numeric:true},
+        {text:"Câu 13. Điền đáp án:",numeric:true,answer:"10"},
+        {text:"Chiều cao (cm) của 10 sinh viên: 160,162,164,166,168,170,172,174,176,178. Chọn các mệnh đề đúng:",options:["Mốt là 170","Trung vị là 169","Giá trị nhỏ nhất là 160","Khoảng tứ phân vị là 18"],multi:true,answer:[1,2,3]},
+        {text:"Câu 15. Chọn đáp án:",options:["19,6%","26%","20%","40%"]},
+        {text:"Khoảng biến thiên của mẫu số liệu ghép nhóm về thời gian tập thể dục buổi sáng của bác An là 10 phút.",options:["Đúng","Sai"],answer:[0]},
+        {text:"Khoảng biến thiên của mẫu số liệu ghép nhóm về thời gian tập thể dục buổi sáng của bác Bình là 25 phút.",options:["Đúng","Sai"],answer:[0]},
+        {text:"Câu 18. Điền đáp án:",numeric:true,answer:"10"},
+        {text:"Để nhập dữ liệu từ file CSV data.csv vào biến df, dùng lệnh nào?",options:["df = csv.read(\"data.csv\")","df = read.csv(\"data.csv\")","df = read.table(\"data.csv\")","df = import.csv(\"data.csv\")"],answer:[1]},
+        {text:"Câu 20. Điền đáp án:",numeric:true},
+        {text:"Câu 21. Điền đáp án:",numeric:true},
+        {text:"Các tứ phân vị của chiều cao (m) của 50 học sinh: Q1=1,62; Q2=1,69; Q3=1,73. Có bao nhiêu bạn cao bằng hoặc trên 1,73 m?",options:["13","12","14","11"]}
+      ]
+    };
+
+    let lessonId = 4, index = 0, score = 0, streak = 0, checked = false;
+    const answered = new Set();
+    const el = id => document.getElementById(id);
+    const normalize = v => String(v).trim().replace(",", ".").replace(/\s/g,"");
+
+    function setLessonMenu(open) {
+      el("questionNav").hidden = !open;
+      el("backdrop").hidden = !open;
+      el("menuToggle").setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    function renderNav() {
+      const box = el("questionList");
+      box.innerHTML = "";
+      lessons[lessonId].forEach((q,i) => {
+        const b = document.createElement("button");
+        b.type="button"; b.className="question-link"+(i===index?" current":"")+(answered.has(i)?" done":"");
+        b.textContent=i+1;
+        b.onclick=()=>{ index=i; checked=false; setLessonMenu(false); render(); };
+        box.appendChild(b);
+      });
+    }
+    function switchLesson(id) {
+      lessonId=id; index=0; score=0; streak=0; checked=false; answered.clear();
+      document.querySelectorAll("[data-lesson]").forEach(b=>b.classList.toggle("active",b.dataset.lesson===String(id)));
+      el("title").textContent="Bài "+id;
+      el("navTitle").textContent="Câu hỏi · Bài "+id;
+      el("quizCard").style.display="block"; el("summary").style.display="none";
+      render();
+    }
+    function render() {
+      const questions=lessons[lessonId], q=questions[index];
+      el("questionNumber").textContent="Câu "+(index+1)+"/"+questions.length;
+      el("questionKind").textContent=q.multi?"Chọn nhiều đáp án":q.numeric?"Điền đáp án":"Trắc nghiệm";
+      el("prompt").textContent=q.text;
+      el("count").textContent=(index+1)+"/"+questions.length;
+      el("score").textContent=score; el("streak").textContent=streak;
+      el("progressBar").style.width=((index/questions.length)*100)+"%";
+      el("feedback").textContent=""; el("feedback").className="";
+      el("checkButton").hidden=false; el("nextButton").hidden=true; checked=false;
+      const area=el("answerArea"); area.innerHTML="";
+      if(q.numeric) {
+        const div=document.createElement("div"); div.className="numeric";
+        const input=document.createElement("input"); input.type="text"; input.placeholder="Nhập đáp án";
+        div.appendChild(input); area.appendChild(div);
+      } else {
+        const div=document.createElement("div"); div.className="options";
+        q.options.forEach((text,i)=>{
+          const label=document.createElement("label"); label.className="option";
+          const input=document.createElement("input"); input.type=q.multi?"checkbox":"radio"; input.name="answer"; input.value=i;
+          const span=document.createElement("span"); span.textContent=text;
+          label.appendChild(input); label.appendChild(span); div.appendChild(label);
+        });
+        area.appendChild(div);
+      }
+      renderNav();
+    }
+    function getAnswer() {
+      const q=lessons[lessonId][index];
+      if(q.numeric) return el("answerArea").querySelector("input").value;
+      return [...el("answerArea").querySelectorAll("input:checked")].map(i=>Number(i.value)).sort((a,b)=>a-b);
+    }
+    function isCorrect(q,answer) {
+      if(q.numeric) return q.answer!==undefined && normalize(answer)===normalize(q.answer);
+      if(!q.answer) return null;
+      const a=Array.isArray(answer)?answer:[answer];
+      return a.length===q.answer.length && a.every(v=>q.answer.includes(v));
+    }
+    function checkAnswer() {
+      if(checked) return;
+      const q=lessons[lessonId][index], answer=getAnswer();
+      const correct=isCorrect(q,answer);
+      if(correct===null) {
+        el("feedback").textContent="Câu này dùng dữ liệu công thức/bảng trong tài liệu; kiểm tra đáp án sau."; el("feedback").className="";
+        checked=true; answered.add(index); el("checkButton").hidden=true; el("nextButton").hidden=false; renderNav(); return;
+      }
+      checked=true; answered.add(index);
+      if(correct){ score+=10; streak++; el("feedback").textContent="Chính xác!"; el("feedback").className="good"; }
+      else { streak=0; el("feedback").textContent="Chưa đúng. Đáp án: "+(q.answer===undefined?"":(q.numeric?q.answer:q.answer.map(i=>q.options[i]).join("; "))); el("feedback").className="bad"; }
+      el("score").textContent=score; el("streak").textContent=streak;
+      el("checkButton").hidden=true; el("nextButton").hidden=false; renderNav();
+    }
+    function nextQuestion() {
+      const questions=lessons[lessonId];
+      if(index<questions.length-1){ index++; render(); }
+      else {
+        el("quizCard").style.display="none"; el("summary").style.display="block";
+        el("summaryText").textContent="Bạn đạt "+score+" điểm ở Bài "+lessonId+".";
+      }
+    }
+    document.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>switchLesson(Number(b.dataset.lesson)));
+    el("menuToggle").onclick=()=>setLessonMenu(el("questionNav").hidden);
+    el("backdrop").onclick=()=>setLessonMenu(false);
+    el("menuClose").onclick=()=>setLessonMenu(false);
+    el("checkButton").onclick=checkAnswer;
+    el("nextButton").onclick=nextQuestion;
+    el("restartButton").onclick=()=>switchLesson(lessonId);
+    render();
+  </script>
+</body>
+</html>

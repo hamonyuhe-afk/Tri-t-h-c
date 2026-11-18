@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu ngang</title>
+    <style type="text/css">
+        ul.hmenu{
+            display: flex;
+            margin:0px;
+            padding:0px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px orangered;
+            list-style: none;
+            height: 50px;
+        }
+        ul.hmenu>li>a{
+            display:inline;
+            line-height: 50px;
+            text-decoration: none;
+            padding:10px;
+            font-variant:small-caps;
+            border: 1px solid rgb(247, 98, 5);
+            background-color: rgb(123, 121, 215);
+            border-radius: 5px
+            
+        }
+        ul.hmenu>li>a:hover{
+            color:yellow;
+            font-weight: bolder;
+            font-size: 26px;
+        }
+        ul.hmenu>li{
+            float:left;
+            margin:0px 10px;
+ position: relative;
+        }
+ul.hmenu>li:hover>.vmenu{
+display:block;
+
+        }
+         ul.vmenu{
+
+            margin:0px;
+            padding:0px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px orangered;
+            list-style:none;
+            width:200px;
+            position: absolute;
+            display: none;
+        }
+        ul.vmenu>li>a{
+            display:block;
+            border-bottom: 1px dotted orangered;
+            line-height: 30px;
+            text-decoration: none;
+            font-variant:small-caps;
+            color:orangered;
+            padding-left: 25px;
+            background: url('anhnen1.jpg') no-repeat left center;
+        }
+        ul.vmenu>li>a:hover{
+            background:url('anhnen2.jpg')  no-repeat left center;
+            color: red;
+            font-weight:bolder;
+        }
+    </style>
+</head>
+<body>
+    <ul class="hmenu">
+        <li><a href="1.html">Trang chủ</a></li>
+        <li><a href="2.html">Giới thiệu</a>
+            <ul class="vmenu">
+                <li><a href="1.html">Hàng bán chạy</a></li>
+                <li><a href="2.html">Hàng yêu thích</a></li>
+                <li><a href="3.html">Hàng mới</a></li>
+                <li><a href="4.html">Hàng đặc biệt</a></li>
+                <li><a href="5.html">Hàng giảm giá</a> </li>
+            </ul>
+        </li>
+        <li><a href="3.html">Liên hệ</a></li>
+        <li><a href="4.html">Góp ý</a></li>
+        <li><a href="#">Hỏi &amp; đáp</a></li>
+    </ul>
+</body>
+</html>

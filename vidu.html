@@ -1,0 +1,176 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đơn xin việc</title>
+
+    <style>
+        body {
+            font-family: Arial;
+        }
+        .form {
+            width: 620px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #e0f2fe;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px #bfbfde;
+        }
+
+        h2 {
+            text-align: center;
+            color: #6366f1;
+        }
+        p {
+            text-align: center;
+        }
+        .hang {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #94B8A3;
+            border-radius: 8px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border: 1px solid #6366f1;
+            box-shadow: 0 0 5px #bfbfde;
+        }
+        .nut {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            margin: 0 5px;
+        }
+        button:hover {
+            background-color: #4f46e5;
+        }
+        button:active {
+            background-color: #3730a3;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <form class="form" onsubmit="return kiemTra()">
+        <h2>ĐƠN XIN VIỆC</h2>
+        <p>Nhập thông tin ứng tuyển. CV định dạng PDF</p>
+
+        <div class="hang">
+
+            <div>
+                <label>Họ tên</label>
+                <input type="text" id="hoten" placeholder="Nguyễn Văn A">
+            </div>
+
+            <div>
+                <label>Email</label>
+                <input type="email" id="email" placeholder="email@domain.com">
+            </div>
+
+            <div>
+                <label>Điện thoại</label>
+                <input type="text" id="dienthoai" placeholder="0xxxxxx">
+            </div>
+
+            <div>
+                <label>Giới tính</label>
+                <select>
+                    <option>Nam</option>
+                    <option>Nữ</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Trình độ</label>
+                <select>
+                    <option>Cao đẳng</option>
+                    <option>Đại học</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Kinh nghiệm (năm)</label>
+                <input type="number" placeholder="0-40">
+            </div>
+
+            
+
+        </div>
+        <div>
+                <label>Kỹ năng</label>
+                <textarea placeholder="VD:Java..."></textarea>
+            </div>
+
+        <div class="cv">
+            <label>CV (PDF<=5MB)</label>
+            <input type="file" accept=".pdf">
+        </div>
+
+        <div class="nut">
+            <button class="submit" type="submit">Gửi hồ sơ</button>
+            <button class="reset" type="reset">Làm lại</button>
+        </div>
+
+    </form>
+
+    <script>
+        function kiemTra() {
+            var hoten = document.getElementById("hoten").value;
+            var email = document.getElementById("email").value;
+            var dienthoai = document.getElementById("dienthoai").value;
+            var cv = document.getElementById("cv").files[0];
+
+            if (hoten.trim() == "") {
+                alert("Vui lòng nhập họ tên.");
+                return false;
+            }
+
+            if (email.trim() == "" || !email.includes("@") ||
+                !email.includes(".")) {
+                alert("Email không hợp lệ.");
+                return false;
+            }
+
+            if (dienthoai.length != 10 || !dienthoai.startsWith("0") ) {
+                alert("Số điện thoại phải có 10 chữ số và bắt đầu bằng 0.");
+                return false;
+            }
+
+            if (!cv || !cv.name.endsWith(".pdf") ||
+                cv.size > 5 * 1024 * 1024) {
+                alert("Vui lòng chọn file PDF không quá 5MB.");
+                return false;
+            }
+
+            console.log("Gửi hồ sơ thành công!");
+            alert("Gửi hồ sơ thành công!");
+            return false;
+        }
+    </script>
+
+</body>
+</html>
+

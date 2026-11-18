@@ -1,0 +1,94 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body>
+    <form action="trangchu.php" method="post" name="from" enctype="multipart/form-data">
+        <fieldset>
+            <legend> Các thẻ trong from HTML</legend>
+        <label for="textbox"> Họ tên </label>
+        <input name="txtHoten" type="text" id="textbox" size="30" maxlength="10" placeholder="Nhập vào họ tên">
+        <br>
+        <br>
+        <label> Địa chỉ </label>
+        <input name="txtDiachi" type="text" placeholder="Nhập vào địa chỉ">
+        <br>
+        <br>
+        <label> Phản hồi đến admin </label><br>
+        <textarea rows="3" cols="50" >Hãy nhập phản hồi cho admin...</textarea>  
+        <br>
+        <br>
+        <label>Mật Khẩu</label>
+        <input name="txtPassword" type="Password" placeholder="Nhập mật khẩu" minlength="8">
+        <br>
+        <br>
+        <label>Hãy chọn một file cho máy tính</label> <br>
+        <input name="txtfile" type="file">
+        <br>
+        <br>
+        <fieldset>
+            <legend>Khảo sát về tài sản cá nhân</legend>
+        <label for="idbike">I have a bike</label><input name="chkPhuongtien" id="idbike" type="checkbox" value="bike"><br>
+        <label for="idcar">I have a car</label><input name="chkPhuongtien" id="idcar" type="checkbox" value="car" checked> <br>
+        <label for="idAriplane">I have Ariplane</label><input name="ckPhuongtien" id="idAriplane" type="checkbox" value="Ariplane"><br>
+        </fieldset>
+        <br>
+        <br>
+        <fieldset>
+        <legend>Giới tính</legend><br>
+        <input name="rdNu" id="idNu" type="radio" value="Nu" checked><label for="idNu">Nu</label> <br>
+        <input name="rdGT" id="idNam" type="radio" value="Nam"><label for="idNam">Nam</label>
+        </fieldset>
+        <br>
+        <br>
+        <label> Lựa chọn thông tin về hãng xe của bạn về hãng xe của bạn đang dùng </label>
+        <select> 
+            <optgroup label="Hãng ô tô">
+                <option>Messides</option>
+                <option>Toyota</option>
+                <option>Honda</option>
+            </optgroup>
+            <optgroup label="Hãng xe máy">
+                <option>Yamaha</option>
+                <option selected>Honda</option>
+                <option>VinFast</option>
+        </select>
+        <br>
+        <br>
+        <label>Ví dụ về lisbox</label><br>
+        <select multiple size="3">
+            <option>Chủ tịch</option>
+            <option>Giám đốc</option>
+            <option>Trưởng phòng</option>
+            <option selected>Nhân viên</option>
+            <option> Phục vụ</option>
+            <option>Bảo vệ</option>
+        </select>
+        <br>
+        <br>
+        <fieldse>
+            <legend> Các thẻ đặc biệt trong HTML5</legend>
+            <label>Chọn ngày sinh</label><input type="date"><br>
+            <label>Chọn tháng</label><input type="month"><br>
+            <label>Chọn tuần</label><input type="week"><br>
+            <label>Chọn số</label><input type="number" min="1" max="9" step="1"><br>
+            <label>Chọn dải số</label><input type="range" min="1" max="100" step="1"><br>
+            <label>Chọn thời gian</label><input type="time"><br>
+            <label>Chọn màu </label><input type="color"><br>
+            <label>email</label><input type="email">
+            
+        </fieldse>
+        <input name="btnButton" type="button" value="Đăng kí">
+        <br>
+        <input name="btnSubmit" type="submit" value="Đăng nhập">
+        <br>
+        <input name="btnReset" type="reset" value="Nhập lại">
+        <br>
+        <input name="btnImage" type="image" src="nutbam.jpg" width="90" height="30">
+    </form>
+    </fieldset>
+ </body>
+ </html>
